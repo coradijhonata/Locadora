@@ -8,6 +8,8 @@ import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -17,6 +19,7 @@ public class Filme {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "tb_filme_id_seq", sequenceName = "tb_filme_id_seq", allocationSize = 1)
     private int id;
 
     @NotBlank(message = "Nome precisa ser preenchido.")
@@ -42,5 +45,9 @@ public class Filme {
     @Column(length = 10)
     @Enumerated(EnumType.STRING)
     private GeneroFilme generoFilme;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "filme")
+    private Set<Locacao> locacoes = new HashSet<>();
+
 
 }

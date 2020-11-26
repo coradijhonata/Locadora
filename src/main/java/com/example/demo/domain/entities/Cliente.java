@@ -8,6 +8,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -18,6 +20,7 @@ public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "tb_cliente_id_seq", sequenceName = "tb_cliente_id_seq", allocationSize = 1)
     private Integer id;
 
     @Column(length = 150)
@@ -44,5 +47,8 @@ public class Cliente {
     @Email(message = "E-mail precisa ser válido.")
     @Column(length = 100)
     private String email;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente")
+    private Set<Locacao> locacoes = new HashSet<>();
 
 }
