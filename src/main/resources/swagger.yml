@@ -1,0 +1,260 @@
+swagger: "2.0"
+info:
+  description: "API para Gestão de locadora back - end."
+  version: "1.0.0"
+  title: "Locadora"
+  termsOfService: "http://swagger.io/terms/"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+
+host: "localhost:8080"
+basePath: "/api/locadora"
+
+schemes:
+  - https
+
+tags:
+  - name: filmes
+    description: Everything about your films
+  - name: locacoes
+    description: tudo sobre locações
+  - name: clientes
+    description: Operations about user
+
+paths:
+  /filmes:
+    post:
+      tags:
+        - filmes
+      summary: "Adicionar um novo filme"
+      operationId: "adicionarFilme"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Pet object that needs to be added to the store"
+          required: true
+          schema:
+            $ref: "#/definitions/FilmeRequest"
+
+      responses:
+        201:
+          description: filme cadastrado com sucesso
+        422:
+          description: erro ao cadastrar o filme
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ErrorResponse'
+
+    get:
+      tags:
+        - filmes
+      summary: listar todos os filmes
+      operationId: listarFilmes
+      parameters:
+        - in: query
+          type: string
+          name: genero
+          description: genero do filme
+        - in: query
+          type: string
+          name: diretor
+          description: diretor do filme
+        - in: query
+          type: integer
+          name: anoLancamento
+          description: ano de lancamento do filme
+        - in: query
+          type: string
+          name: status
+          description: status do filme na locadora
+          enum:
+            - DISPONIVEL
+            - ALUGADO
+        - in: query
+          type: string
+          name: tipo
+          description: Tipo do filme
+          enum:
+            - LANCAMENTO
+            - COMUM
+
+      responses:
+        200:
+          description: filmes buscados com sucesso
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/FilmeResponseModel'
+
+  /filmes/{id}:
+    put:
+      tags:
+        - "filmes"
+      summary: "Atualizar um filme"
+      operationId: "atualizarFilme"
+      parameters:
+        - in: path
+          type: string
+          name: id
+          description: id do filme
+          required: true
+        - in: "body"
+          name: "body"
+          description: "filme put request"
+          required: true
+          schema:
+            $ref: "#/definitions/FilmePutRequest"
+
+      responses:
+        200:
+          description: filme atualizado com sucesso
+        422:
+          description: erro ao atualizar o filme
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ErrorResponse'
+
+    delete:
+      tags:
+        - filmes
+      summary: deletar todos os filmes
+      operationId: deletarFilmes
+      parameters:
+        - in: path
+          type: string
+          name: id
+          description: id do filme
+          required: true
+
+      responses:
+        200:
+          description: filme deletado com sucesso
+        422:
+          description: erro ao deletar filme
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ErrorResponse'
+
+
+
+
+definitions:
+
+  FilmeRequest:
+    type: object
+    required:
+      - nome
+      - diretor
+      - anoLancamento
+      - isLancamento
+      - qtdVolumesDisponiveis
+      - generoFilme
+    properties:
+      nome:
+        type: string
+        description: nome do filme
+        example: titanic
+      diretor:
+        type: string
+        description: nome do diretor
+        example: liminha
+      anoLancamento:
+        type: integer
+        description: ano lançamento do filme
+        example: 2003
+      isLancamento:
+        type: boolean
+        description: flag que informa se o filme é lancamento
+        example: true
+      qtdVolumesDisponiveis:
+        type: integer
+        description: numero de volumes disponiveis na loja
+        example: 2
+      generoFilme:
+        type: string
+        description: genero do filme
+        enum: [ ACAO, AVENTURA, COMEDIA, DANCA, DOCUMENTARIO, DRAMA, FANTASIA, FAROESTE, FICCAO_CIENTIFICA,
+                MUSICAL, FILME_POLICIAL, SUSPENSE, TERROR ]
+
+  FilmePutRequest:
+    type: object
+    properties:
+      nome:
+        type: string
+        description: nome do filme
+        example: titanic
+      diretor:
+        type: string
+        description: nome do diretor
+        example: liminha
+      anoLancamento:
+        type: integer
+        description: ano lançamento do filme
+        example: 2003
+      isLancamento:
+        type: boolean
+        description: flag que informa se o filme é lancamento
+        example: true
+      qtdVolumesDisponiveis:
+        type: integer
+        description: numero de volumes disponiveis na loja
+        example: 2
+      generoFilme:
+        type: string
+        description: genero do filme
+        enum: [ ACAO, AVENTURA, COMEDIA, DANCA, DOCUMENTARIO, DRAMA, FANTASIA, FAROESTE, FICCAO_CIENTIFICA,
+                MUSICAL, FILME_POLICIAL, SUSPENSE, TERROR ]
+
+  FilmeResponseModel:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: id do filme
+        example: 10
+      nome:
+        type: string
+        description: nome do filme
+        example: titanic
+      diretor:
+        type: string
+        description: nome do diretor
+        example: liminha
+      anoLancamento:
+        type: integer
+        description: ano lançamento do filme
+        example: 2003
+      isLancamento:
+        type: boolean
+        description: flag que informa se o filme é lancamento
+        example: true
+      qtdVolumesDisponiveis:
+        type: integer
+        description: numero de volumes disponiveis na loja
+        example: 2
+      generoFilme:
+        type: string
+        description: genero do filme
+        enum: [ ACAO, AVENTURA, COMEDIA, DANCA, DOCUMENTARIO, DRAMA, FANTASIA, FAROESTE, FICCAO_CIENTIFICA,
+                MUSICAL, FILME_POLICIAL, SUSPENSE, TERROR ]
+
+    ErrorResponse:
+      type: object
+      properties:
+        codigo:
+          type: string
+          description: codigo do erro
+        mensagem:
+          type: string
+          description: mensagem do erro
+        mensagemDetalhe:
+          type: string
+          description: detalhamento do erro
