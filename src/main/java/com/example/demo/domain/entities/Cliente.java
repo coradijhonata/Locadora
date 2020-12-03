@@ -51,4 +51,5 @@ public class Cliente {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente")
     private Set<Locacao> locacoes = new HashSet<>();
 
+
 }

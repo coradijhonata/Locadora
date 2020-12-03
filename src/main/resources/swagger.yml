@@ -27,16 +27,16 @@ paths:
     post:
       tags:
         - filmes
-      summary: "Adicionar um novo filme"
-      operationId: "adicionarFilme"
+      summary: Adicionar um novo filme
+      operationId: adicionarFilme
       consumes:
-        - "application/json"
+        - application/json
       produces:
-        - "application/json"
+        - application/json
       parameters:
-        - in: "body"
-          name: "body"
-          description: "Pet object that needs to be added to the store"
+        - in: body
+          name: body
+          description: objeto de filme que precisa ser adicionado
           required: true
           schema:
             $ref: "#/definitions/FilmeRequest"
@@ -143,11 +143,125 @@ paths:
             items:
               $ref: '#/definitions/ErrorResponse'
 
+  /clientes:
+    post:
+      tags:
+        - clientes
+      summary: adicionar um novo cliente
+      operationId: adiconarCliente
+      consumes:
+        - application.jason
+      produces:
+        - application.json
+      parameters:
+        - in: body
+          name: body
+          description: objeto de cliente que precisa ser adicionado
+          required: true
+          schema:
+            $ref: "#/definitions/ClientePostRequest"
 
+      responses:
+        201:
+          description: cliente cadastrado com sucesso
+        422:
+          description: erro ao cadastrar o cliente
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ErrorResponse'
+
+    get:
+      tags:
+        - clientes
+      summary: listar todos os cliente
+      operationId: listarClientes
+      parameters:
+        - in: query
+          type: string
+          name: nome
+          description: nome do cliente
+        - in: query
+          type: string
+          name: cpf
+          description: cpf do cliente
+        - in: query
+          type: string
+          name: telefone
+          description: telefone do cliente
+        - in: query
+          type: string
+          name: email
+          description: email do cliente
+        - in: query
+          type: string
+          name: sexo
+          description: genero do cliente
+          enum:
+            - MASCULINO
+            - FEMININO
+
+      responses:
+        200:
+          description: clientes buscados com sucesso
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ClienteResponseModel'
+
+  /clientes/{id}:
+    put:
+      tags:
+        - clientes
+      summary: atualiza um cliente
+      operationId: atualizarCliente
+      parameters:
+        - in: path
+          type: string
+          name: id
+          description: id do cliente
+          requeired: true
+        - in: body
+          name: body
+          description: cliente put request
+          required: true
+          schema:
+            $ref: '#/definitions/ClientePutRequest'
+
+      responses:
+        200:
+          description: cliente atualizado com sucesso
+        422:
+          description: erro ao atualizar o cliente
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ErrorResponse'
+
+    delete:
+      tags:
+        - clientes
+      summary: deletar os cliente
+      operationId: deletarClientes
+      parameters:
+        - in: path
+          type: string
+          name: id
+          description: id do cliente
+          required: true
+
+      responses:
+        200:
+          description: cliente deletado com sucesso
+        422:
+          description: erro ao deletar cliente
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ErrorResponse'
 
 
 definitions:
-
   FilmeRequest:
     type: object
     required:
@@ -246,6 +360,64 @@ definitions:
         enum: [ ACAO, AVENTURA, COMEDIA, DANCA, DOCUMENTARIO, DRAMA, FANTASIA, FAROESTE, FICCAO_CIENTIFICA,
                 MUSICAL, FILME_POLICIAL, SUSPENSE, TERROR ]
 
+  ClientePostRequest:
+    type: object
+    required:
+      - nome
+      - cpf
+      - telefone
+      - email
+      - sexo
+    properties:
+      nome:
+        type: string
+        description: nome do cliente
+        example: Jurandir
+      cpf:
+        type: string
+        description: cpf do cliente
+        example: 12365498700
+      telefone:
+        type: string
+        description: telefone do cliente
+        example: 345212345
+      email:
+        type: string
+        description: email do cliente
+        example: jurandir@ig.com.br
+      sexo:
+        type: string
+        description: genero do cliente
+        enum: [ MASCULINO, FEMININO ]
+
+  ClienteResponseModel:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: id do cliente
+        example: 10
+      nome:
+        type: string
+        description: nome do cliente
+        example: Jurandir Barbosa
+      cpf:
+        type: string
+        description: cpf do cliente
+        example: 14785236900
+      telefone:
+        type: string
+        description: telefone do cliente
+        example: 34529632
+      email:
+        type: string
+        description: email do cliente
+        example: jurandirbarbosa@ig.com.br
+      sexo:
+        type: string
+        description: genero do cliente
+        enum: [ MASCULINO, FEMININI ]
+
     ErrorResponse:
       type: object
       properties:
@@ -258,3 +430,27 @@ definitions:
         mensagemDetalhe:
           type: string
           description: detalhamento do erro
+
+  ClientePutRequest:
+    type: object
+    properties:
+      nome:
+        type: string
+        description: nome do cliente
+        example: Jurandir
+      cpf:
+        type: string
+        description: cpf do cliente
+        example: 12365478977
+      telefone:
+        type: string
+        description: telefone do cliente
+        example: 34521254
+      email:
+        type: string
+        description: email do cliente
+        example: jurandir@ig.com.br
+      sexo:
+        type: string
+        description: genero do cliente
+        enum: [ MASCULINO, FEMININO ]
