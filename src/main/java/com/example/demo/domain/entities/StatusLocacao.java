@@ -1,6 +1,6 @@
 package com.example.demo.domain.entities;
 
 public enum StatusLocacao {
-    LOCADO, DISPONIVEL;
+    EM_ATRASO, ATIVO, DEVOLVIDO, RENOVADO;
 
 }
