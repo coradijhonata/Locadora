@@ -11,35 +11,31 @@ info:
 host: "localhost:8080"
 basePath: "/api/locadora"
 
-schemes:
-  - https
-
 tags:
-  - name: filmes
-    description: Everything about your films
-  - name: locacoes
-    description: tudo sobre locações
-  - name: clientes
-    description: Operations about user
+  - name: "filmes-controller"
+    description: "Everything about your films"
+  - name: "locacoes-controller"
+    description: "tudo sobre locações"
+  - name: "clientes-controller"
+    description: "Operations about user"
+
+schemes:
+  - "https"
 
 paths:
   /filmes:
     post:
       tags:
-        - filmes
+        - filmes-controller
       summary: Adicionar um novo filme
       operationId: adicionarFilme
-      consumes:
-        - application/json
-      produces:
-        - application/json
       parameters:
         - in: body
           name: body
-          description: objeto de filme que precisa ser adicionado
+          description: filme post request
           required: true
           schema:
-            $ref: "#/definitions/FilmeRequest"
+            $ref: '#/definitions/FilmePostRequest'
 
       responses:
         201:
@@ -53,7 +49,7 @@ paths:
 
     get:
       tags:
-        - filmes
+        - filmes-controller
       summary: listar todos os filmes
       operationId: listarFilmes
       parameters:
@@ -74,8 +70,10 @@ paths:
           name: status
           description: status do filme na locadora
           enum:
-            - DISPONIVEL
-            - ALUGADO
+            - EM_ATRASO
+            - ATIVO
+            - DEVOLVIDO
+            - RENOVADO
         - in: query
           type: string
           name: tipo
@@ -93,23 +91,43 @@ paths:
               $ref: '#/definitions/FilmeResponseModel'
 
   /filmes/{id}:
+    get:
+      tags:
+        - filmes-controller
+      summary: pegar filme por id
+      operationId: pegarFilmeId
+      parameters:
+        - name: id
+          in: path
+          description: retorna o filme pela id
+          required: true
+          type: integer
+
+      responses:
+        200:
+          description: filme buscado com sucesso
+        422:
+          description: erro ao buscar o filme
+          schema:
+            $ref: '#/definitions/FilmeResponseModel'
+
     put:
       tags:
-        - "filmes"
-      summary: "Atualizar um filme"
-      operationId: "atualizarFilme"
+        - filmes-controller
+      summary: Atualizar um filme
+      operationId: atualizarFilme
       parameters:
         - in: path
           type: string
           name: id
           description: id do filme
           required: true
-        - in: "body"
-          name: "body"
-          description: "filme put request"
+        - in: body
+          name: filmePutRequest
+          description: filme put request
           required: true
           schema:
-            $ref: "#/definitions/FilmePutRequest"
+            $ref: '#/definitions/FilmePutRequest'
 
       responses:
         200:
@@ -123,8 +141,8 @@ paths:
 
     delete:
       tags:
-        - filmes
-      summary: deletar todos os filmes
+        - filmes-controller
+      summary: deletar filme por id
       operationId: deletarFilmes
       parameters:
         - in: path
@@ -146,11 +164,11 @@ paths:
   /clientes:
     post:
       tags:
-        - clientes
+        - clientes-controller
       summary: adicionar um novo cliente
       operationId: adiconarCliente
       consumes:
-        - application.jason
+        - application.json
       produces:
         - application.json
       parameters:
@@ -173,7 +191,7 @@ paths:
 
     get:
       tags:
-        - clientes
+        - clientes-controller
       summary: listar todos os cliente
       operationId: listarClientes
       parameters:
@@ -210,9 +228,29 @@ paths:
               $ref: '#/definitions/ClienteResponseModel'
 
   /clientes/{id}:
+    get:
+      tags:
+        - clientes-controller
+      summary: pegar cliente por id
+      operationId: pegarClienteId
+      parameters:
+        - name: id
+          in: path
+          description: retorna o cliente pela id
+          required: true
+          type: integer
+
+      responses:
+        200:
+          description: cliente buscado com sucesso
+        422:
+          description: erro ao buscar o cliente
+          schema:
+            $ref: '#/definitions/ClienteResponseModel'
+
     put:
       tags:
-        - clientes
+        - clientes-controller
       summary: atualiza um cliente
       operationId: atualizarCliente
       parameters:
@@ -220,9 +258,9 @@ paths:
           type: string
           name: id
           description: id do cliente
-          requeired: true
+          required: true
         - in: body
-          name: body
+          name: clientePutRequest
           description: cliente put request
           required: true
           schema:
@@ -240,8 +278,8 @@ paths:
 
     delete:
       tags:
-        - clientes
-      summary: deletar os cliente
+        - clientes-controller
+      summary: deletar cliente por id
       operationId: deletarClientes
       parameters:
         - in: path
@@ -260,9 +298,176 @@ paths:
             items:
               $ref: '#/definitions/ErrorResponse'
 
+  /locacoes:
+    post:
+      tags:
+        - locacoes-controller
+      summary: adicionar uma nova locacao
+      operationId: adiconarLocacao
+      consumes:
+        - application.json
+      produces:
+        - application.json
+      parameters:
+        - in: body
+          name: body
+          description: objeto de locacao que precisa ser adicionado
+          required: true
+          schema:
+            $ref: "#/definitions/LocacaoPostRequest"
+
+      responses:
+        201:
+          description: locacao efetuada com sucesso
+        422:
+          description: erro ao efetuar uma locacao
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ErrorResponse'
+
+    get:
+      tags:
+        - locacoes-controller
+      summary: listar todas as locacoes
+      operationId: listarLocacoes
+      parameters:
+        - in: query
+          type: integer
+          name: idLocacaoPrincipal
+          description: id principal da locacao
+        - in: query
+          type: string
+          name: filme
+          description: objeto filme
+        - in: query
+          type: string
+          name: cliente
+          description: objeto cliente
+        - in: query
+          type: string
+          name: dtLocacao
+          description: data da locacao
+        - in: query
+          type: string
+          name: dtDevolucao
+          description: data da devolucao
+        - in: query
+          type: string
+          name: statusLocacao
+          description: status da locacao
+          enum:
+            - EM_ATRASO
+            - ATIVO
+            - DEVOLVIDO
+            - RENOVADO
+
+      responses:
+        200:
+          description: clientes buscados com sucesso
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/LocacaoResponseModel'
+
+  /locacoes/{id}:
+    get:
+      tags:
+        - locacoes-controller
+      summary: pegar a locacao por id
+      operationId: pegarLocacaoId
+      parameters:
+        - name: id
+          in: path
+          description: retorna a locacao por id
+          required: true
+          type: integer
+
+      responses:
+        200:
+          description: locacao buscada com sucesso
+        422:
+          description: erro ao buscar a locacao
+          schema:
+            $ref: '#/definitions/LocacaoResponseModel'
+
+    put:
+      tags:
+        - locacoes-controller
+      summary: atualiza uma locacao
+      operationId: atualizarLocacao
+      parameters:
+        - in: path
+          type: string
+          name: id
+          description: id da locacao
+          required: true
+        - in: body
+          name: locacoesPutRequest
+          description: locacao put request
+          required: true
+          schema:
+            $ref: '#/definitions/LocacoesPutRequest'
+
+      responses:
+        200:
+          description: cliente atualizado com sucesso
+        422:
+          description: erro ao atualizar o cliente
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ErrorResponse'
+
+    delete:
+      tags:
+        - locacoes-controller
+      summary: deletar uma locacao po id
+      operationId: deletarLocacoes
+      parameters:
+        - in: path
+          type: string
+          name: id
+          description: id da locacao
+          required: true
+
+      responses:
+        200:
+          description: locacao deletada com sucesso
+        422:
+          description: erro ao deletar a locacao
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ErrorResponse'
+
+  /locacoes/{idLocacaoPrincipal}/renovacoes:
+    get:
+      tags:
+        - locacoes-controller
+      summary: listar todas as renovações
+      operationId: listarRenovacoes
+      parameters:
+        - name: idLocacaoPrincipal
+          in: path
+          description: buscar a lista de filmes renovados pelo filtro renovacoes
+          required: true
+          type: array
+          items:
+            type: string
+            enum:
+              - RENOVADO
+
+      responses:
+        200:
+          description: lista encontrada
+        422:
+          description: lista não pode ser encontrada
+          schema:
+            $ref: '#/definitions/LocacaoResponseModel'
 
 definitions:
-  FilmeRequest:
+  FilmePostRequest:
     type: object
     required:
       - nome
@@ -416,20 +621,7 @@ definitions:
       sexo:
         type: string
         description: genero do cliente
-        enum: [ MASCULINO, FEMININI ]
-
-    ErrorResponse:
-      type: object
-      properties:
-        codigo:
-          type: string
-          description: codigo do erro
-        mensagem:
-          type: string
-          description: mensagem do erro
-        mensagemDetalhe:
-          type: string
-          description: detalhamento do erro
+        enum: [ MASCULINO, FEMININO ]
 
   ClientePutRequest:
     type: object
@@ -454,3 +646,116 @@ definitions:
         type: string
         description: genero do cliente
         enum: [ MASCULINO, FEMININO ]
+
+  LocacaoPostRequest:
+    type: object
+    required:
+      - idLocacaoPrincipal
+      - filme
+      - cliente
+      - dtLocacao
+      - dtDevolucao
+      - statusLocacao
+    properties:
+      idLocacaoPrincipal:
+        type: integer
+        description: id principal da locacao
+        example: 12354
+      filme:
+        type: object
+        description: nome do filme a ser locado
+        example: titanic
+      cliente:
+        type: object
+        description: nome do cliente que está locando o filme
+        example: Jurandir
+      dtLocacao:
+        type: string
+        description: data da locacao
+        example: 10/10/2010
+      dtDevolucao:
+        type: string
+        description: data da devolucao
+        example: 10/10/2010
+      statusLocacao:
+        type: string
+        description: status da locacao
+        enum: [ EM_ATRASO, ATIVO, DEVOLVIDO, RENOVADO ]
+
+  LocacaoResponseModel:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: id da locacao
+        example: 10
+      idLocacaoPrincipal:
+        type: integer
+        description: id principal da locacao
+        example: 101010
+      filme:
+        type: object
+        description: objeto filme
+        example: titanic
+      cliente:
+        type: object
+        description: objeto cliente
+        example: Jurandir
+      dtLocacao:
+        type: string
+        description: data da locacao
+        example: 10/10/10
+      dtDevolucao:
+        type: string
+        description: data da devolucao
+        example: 10/10/10
+      statusLocacao:
+        type: string
+        description: status do filme
+        enum: [ EM_ATRASO, ATIVO, DEVOLVIDO, RENOVADO ]
+      locacoes:
+        type: array
+        items:
+          type: string
+
+  LocacoesPutRequest:
+    type: object
+    properties:
+      idLocacaoPrincipal:
+        type: integer
+        description: id principal da locacao
+        example: 123
+      filme:
+        type: object
+        description: objeto de filme
+        example: titanic
+      cliente:
+        type: object
+        description: objeto de cliente
+        example: Jurandir
+      dtLocacao:
+        type: string
+        description: data da locacao
+        example: 10/10/01
+      dtDevolucao:
+        type: string
+        description: data da devolucao
+        example: 10/10/01
+      statusLocacao:
+        type: string
+        description: status do filme
+        enum: [ EM_ATRASO, ATIVO, DEVOLVIDO, RENOVADO ]
+
+
+  ErrorResponse:
+    type: object
+    properties:
+      codigo:
+        type: string
+        description: codigo do erro
+      mensagem:
+        type: string
+        description: mensagem do erro
+      mensagemDetalhe:
+        type: string
+        description: detalhamento do erro

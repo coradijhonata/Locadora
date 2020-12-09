@@ -49,7 +49,8 @@ public class Locacao {
 
     @NotBlank(message = "status_locacao não pode estar vazio")
     @Column(length = 10)
-    private String statusLocacao;
+    @Enumerated(EnumType.STRING)
+    private StatusLocacao statusLocacao;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_locacao_principal", columnDefinition = "tb_locacao_pkey", foreignKey = @ForeignKey(name = "tb_locacao_id_locacao_principal_fkey"))

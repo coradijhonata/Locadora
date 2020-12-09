@@ -34,8 +34,10 @@ public class Filme {
     @Digits(integer = 4, fraction = 0)
     private int ano_lancamento;
 
-    @AssertTrue
-    private boolean is_lancamento;
+    @NotNull(message = "Tipo do filme precisa ser preenchido.")
+    @Column(length = 10)
+    @Enumerated(EnumType.STRING)
+    private TipoFilme tipoFilme;
 
     @NotBlank(message = "Quantidade de volumes disponiveis não pode estar em branco.")
     @Digits(integer = 10, fraction = 0)
