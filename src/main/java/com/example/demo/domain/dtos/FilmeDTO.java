@@ -1,4 +1,4 @@
-package com.example.demo.dtos;
+package com.example.demo.domain.dtos;
 
 import com.example.demo.domain.entities.Filme;
 import com.example.demo.domain.entities.GeneroFilme;

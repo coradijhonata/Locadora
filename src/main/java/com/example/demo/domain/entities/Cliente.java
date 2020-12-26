@@ -2,6 +2,7 @@ package com.example.demo.domain.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -13,10 +14,10 @@ import java.util.Set;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "tb_cliente")
 public class Cliente {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +51,5 @@ public class Cliente {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente")
     private Set<Locacao> locacoes = new HashSet<>();
-
 
 }
