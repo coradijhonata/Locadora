@@ -1,4 +1,4 @@
-package com.example.demo.repositories;
+package com.example.demo.domain.repositories;
 
 import com.example.demo.domain.entities.Locacao;
 import org.springframework.data.repository.CrudRepository;

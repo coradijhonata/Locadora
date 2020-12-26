@@ -1,7 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.domain.entities.Locacao;
-import com.example.demo.repositories.LocacaoRepository;
+import com.example.demo.domain.repositories.LocacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
