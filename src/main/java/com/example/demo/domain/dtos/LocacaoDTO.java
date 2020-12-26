@@ -2,11 +2,16 @@ package com.example.demo.domain.dtos;
 
 import com.example.demo.domain.entities.Cliente;
 import com.example.demo.domain.entities.Filme;
-import com.example.demo.domain.entities.Locacao;
 import com.example.demo.domain.entities.StatusLocacao;
+import lombok.*;
 
 import java.util.Date;
 
+@RequiredArgsConstructor
+@NoArgsConstructor
+@Builder
+@Getter
+@Setter
 public class LocacaoDTO {
 
     private Filme filme;
@@ -15,13 +20,5 @@ public class LocacaoDTO {
     private Date dtDevolucao;
     private StatusLocacao statusLocacao;
 
-    public LocacaoDTO(Locacao locacao) {
-        this.filme = locacao.getFilme();
-        this.cliente = locacao.getCliente();
-        this.dtLocacao = locacao.getDtLocacao();
-        this.dtDevolucao = locacao.getDtDevolucao();
-        this.statusLocacao = locacao.getStatusLocacao();
-
-    }
 
 }

@@ -1,9 +1,13 @@
 package com.example.demo.domain.dtos;
 
-import com.example.demo.domain.entities.Cliente;
 import com.example.demo.domain.entities.GeneroCliente;
+import lombok.*;
 
-
+@RequiredArgsConstructor
+@NoArgsConstructor
+@Builder
+@Getter
+@Setter
 public class ClienteDTO {
 
     private String nome;
@@ -12,11 +16,4 @@ public class ClienteDTO {
     private String telefone;
     private String email;
 
-    public ClienteDTO(Cliente cliente) {
-        this.nome = cliente.getNome();
-        this.cpf = cliente.getCpf();
-        this.sexo = cliente.getSexo();
-        this.telefone = cliente.getTelefone();
-        this.email = cliente.getEmail();
     }
-}
