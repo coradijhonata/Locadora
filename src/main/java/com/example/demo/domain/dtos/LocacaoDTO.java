@@ -12,8 +12,9 @@ import java.util.Date;
 @Builder
 @Getter
 @Setter
-public class LocacaoDTO {
+public class LocacaoDTO extends BaseDTO {
 
+    private Long id;
     private Filme filme;
     private Cliente cliente;
     private Date dtLocacao;

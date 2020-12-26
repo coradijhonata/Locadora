@@ -9,8 +9,9 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class FilmeDTO {
+public class FilmeDTO extends BaseDTO {
 
+    private Long id;
     private String nome;
     private String diretor;
     private int ano_lancamento;

@@ -8,12 +8,13 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class ClienteDTO {
+public class ClienteDTO extends BaseDTO {
 
+    private Long id;
     private String nome;
     private String cpf;
     private GeneroCliente sexo;
     private String telefone;
     private String email;
 
-    }
+}

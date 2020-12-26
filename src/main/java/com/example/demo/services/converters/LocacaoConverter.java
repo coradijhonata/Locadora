@@ -3,7 +3,9 @@ package com.example.demo.services.converters;
 import com.example.demo.domain.dtos.LocacaoDTO;
 import com.example.demo.domain.entities.Locacao;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Component;
 
+@Component
 public class LocacaoConverter implements Converter<Locacao, LocacaoDTO> {
     @Override
     public Locacao converterDtoParaEntidade(LocacaoDTO locacaoDTO) {

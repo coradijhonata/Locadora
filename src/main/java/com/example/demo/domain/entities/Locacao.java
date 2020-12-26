@@ -1,8 +1,6 @@
 package com.example.demo.domain.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -12,17 +10,19 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Entity
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@EqualsAndHashCode
 @Table(name = "tb_locacao")
-public class Locacao {
+public class Locacao implements Persistable<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @SequenceGenerator(name = "tb_locacao_id_seq", sequenceName = "tb_locacao_id_seq", allocationSize = 1)
-    private int id;
+    private Long id;
 
     @NotBlank(message = "id_locacao não pode estar vazio")
     @Column(name = "id_locacao_principal")
