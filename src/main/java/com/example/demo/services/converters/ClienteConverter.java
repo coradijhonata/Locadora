@@ -3,7 +3,9 @@ package com.example.demo.services.converters;
 import com.example.demo.domain.dtos.ClienteDTO;
 import com.example.demo.domain.entities.Cliente;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ClienteConverter implements Converter<Cliente, ClienteDTO> {
 
 

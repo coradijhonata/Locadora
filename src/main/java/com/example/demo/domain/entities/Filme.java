@@ -1,8 +1,6 @@
 package com.example.demo.domain.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
@@ -11,17 +9,19 @@ import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Entity
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@EqualsAndHashCode
 @Table(name = "tb_filme")
-public class Filme {
+public class Filme implements Persistable<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @SequenceGenerator(name = "tb_filme_id_seq", sequenceName = "tb_filme_id_seq", allocationSize = 1)
-    private int id;
+    private Long id;
 
     @NotBlank(message = "Nome precisa ser preenchido.")
     @Column(length = 50)
