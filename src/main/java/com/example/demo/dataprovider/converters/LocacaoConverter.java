@@ -1,7 +1,7 @@
-package com.example.demo.services.converters;
+package com.example.demo.dataprovider.converters;
 
+import com.example.demo.dataprovider.entities.Locacao;
 import com.example.demo.domain.dtos.LocacaoDTO;
-import com.example.demo.domain.entities.Locacao;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 

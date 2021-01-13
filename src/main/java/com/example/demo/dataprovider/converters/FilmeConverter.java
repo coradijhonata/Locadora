@@ -1,7 +1,7 @@
-package com.example.demo.services.converters;
+package com.example.demo.dataprovider.converters;
 
+import com.example.demo.dataprovider.entities.Filme;
 import com.example.demo.domain.dtos.FilmeDTO;
-import com.example.demo.domain.entities.Filme;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 

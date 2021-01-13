@@ -1,8 +1,8 @@
 package com.example.demo.controllers;
 
 
-import com.example.demo.domain.entities.Locacao;
-import com.example.demo.domain.repositories.LocacaoRepository;
+import com.example.demo.dataprovider.entities.Locacao;
+import com.example.demo.dataprovider.repositories.LocacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

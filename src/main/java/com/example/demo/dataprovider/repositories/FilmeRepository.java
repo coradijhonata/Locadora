@@ -1,6 +1,6 @@
-package com.example.demo.domain.repositories;
+package com.example.demo.dataprovider.repositories;
 
-import com.example.demo.domain.entities.Filme;
+import com.example.demo.dataprovider.entities.Filme;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FilmeRepository extends JpaRepository<Filme, Long> {

@@ -1,7 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.domain.dtos.ClienteDTO;
-import com.example.demo.services.services.ClienteService;
+import com.example.demo.domain.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

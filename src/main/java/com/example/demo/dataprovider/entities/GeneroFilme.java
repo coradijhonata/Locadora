@@ -1,4 +1,4 @@
-package com.example.demo.domain.entities;
+package com.example.demo.dataprovider.entities;
 
 public enum GeneroFilme {
 

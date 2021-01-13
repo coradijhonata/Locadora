@@ -1,10 +1,10 @@
-package com.example.demo.services.services;
+package com.example.demo.domain.services;
 
+import com.example.demo.dataprovider.converters.ClienteConverter;
+import com.example.demo.dataprovider.converters.Converter;
+import com.example.demo.dataprovider.entities.Cliente;
+import com.example.demo.dataprovider.repositories.ClienteRepository;
 import com.example.demo.domain.dtos.ClienteDTO;
-import com.example.demo.domain.entities.Cliente;
-import com.example.demo.domain.repositories.ClienteRepository;
-import com.example.demo.services.converters.ClienteConverter;
-import com.example.demo.services.converters.Converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;

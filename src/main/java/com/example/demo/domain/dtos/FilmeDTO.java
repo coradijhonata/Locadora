@@ -1,7 +1,7 @@
 package com.example.demo.domain.dtos;
 
-import com.example.demo.domain.entities.GeneroFilme;
-import com.example.demo.domain.entities.TipoFilme;
+import com.example.demo.dataprovider.entities.GeneroFilme;
+import com.example.demo.dataprovider.entities.TipoFilme;
 import lombok.*;
 
 @RequiredArgsConstructor

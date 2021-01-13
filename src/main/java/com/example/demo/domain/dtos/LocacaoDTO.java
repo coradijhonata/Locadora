@@ -1,8 +1,8 @@
 package com.example.demo.domain.dtos;
 
-import com.example.demo.domain.entities.Cliente;
-import com.example.demo.domain.entities.Filme;
-import com.example.demo.domain.entities.StatusLocacao;
+import com.example.demo.dataprovider.entities.Cliente;
+import com.example.demo.dataprovider.entities.Filme;
+import com.example.demo.dataprovider.entities.StatusLocacao;
 import lombok.*;
 
 import java.util.Date;

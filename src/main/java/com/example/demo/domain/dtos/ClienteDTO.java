@@ -1,6 +1,6 @@
 package com.example.demo.domain.dtos;
 
-import com.example.demo.domain.entities.GeneroCliente;
+import com.example.demo.dataprovider.entities.GeneroCliente;
 import lombok.*;
 
 @RequiredArgsConstructor

@@ -1,8 +1,8 @@
-package com.example.demo.services.services;
+package com.example.demo.domain.services;
 
+import com.example.demo.dataprovider.converters.Converter;
+import com.example.demo.dataprovider.entities.Persistable;
 import com.example.demo.domain.dtos.BaseDTO;
-import com.example.demo.domain.entities.Persistable;
-import com.example.demo.services.converters.Converter;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.persistence.EntityNotFoundException;
