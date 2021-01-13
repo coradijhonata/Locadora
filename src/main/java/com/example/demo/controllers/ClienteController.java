@@ -1,52 +1,44 @@
 package com.example.demo.controllers;
 
-import com.example.demo.domain.entities.Cliente;
-import com.example.demo.domain.repositories.ClienteRepository;
+import com.example.demo.domain.dtos.ClienteDTO;
+import com.example.demo.services.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    private ClienteService clienteService;
 
     @GetMapping
-    public List<Cliente> listarClientes() {
-        List<Cliente> clientes = clienteRepository.findAll();
-        return clientes;
+    public List<ClienteDTO> listarClientes() {
+        return clienteService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Cliente buscarCliente(@PathVariable Long id) {
-        Optional<Cliente> cliente = clienteRepository.findById(id);
-        Cliente clienteResultado = cliente.get();
-        return clienteResultado;
+    public ClienteDTO buscarCliente(@PathVariable Long id) {
+        return clienteService.findById(id);
 
     }
 
     @PostMapping
-    public Cliente inserirCliente(@RequestBody Cliente cliente) {
-        Cliente clienteSalvo = clienteRepository.save(cliente);
-        return clienteSalvo;
+    public ClienteDTO inserirCliente(@RequestBody ClienteDTO clienteDTO) {
+        return clienteService.save(clienteDTO);
     }
 
     @DeleteMapping("/{id}")
-    public Optional<Cliente> excluirCliente(@PathVariable Long id) {
-        Optional<Cliente> cliente = clienteRepository.findById(id);
-        clienteRepository.delete(cliente.get());
-        return cliente;
-
+    public void excluirCliente(@PathVariable Long id) {
+        clienteService.delete(id);
     }
 
     @PutMapping
-    public Cliente editarCliente(@RequestBody Cliente cliente) {
-        Cliente clienteEditado = clienteRepository.save(cliente);
-        return clienteEditado;
+    public ClienteDTO editarCliente(@RequestBody ClienteDTO clienteDTO) {
+        return clienteService.save(clienteDTO);
     }
 
 }
