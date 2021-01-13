@@ -1,8 +1,8 @@
 package com.example.demo.controllers;
 
 
-import com.example.demo.domain.entities.Filme;
-import com.example.demo.domain.repositories.FilmeRepository;
+import com.example.demo.dataprovider.entities.Filme;
+import com.example.demo.dataprovider.repositories.FilmeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
