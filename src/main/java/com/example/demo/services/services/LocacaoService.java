@@ -21,7 +21,6 @@ public class LocacaoService extends AbstractService<Locacao, LocacaoDTO, Long> {
     @Autowired
     private LocacaoConverter locacaoConverter;
 
-
     @Override
     protected JpaRepository<Locacao, Long> getRepository() {
         return locacaoRepository;

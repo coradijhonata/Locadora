@@ -8,11 +8,8 @@ public interface Converter<T, DTO> {
 
     public DTO converterEntidadeParaDto(T t);
 
-
     public default DTO converterClone(DTO source, DTO target){
         BeanUtils.copyProperties(source, target, "id");
         return target;
     }
-
-
 }
