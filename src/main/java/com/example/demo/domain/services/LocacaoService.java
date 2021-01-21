@@ -1,33 +1,67 @@
 package com.example.demo.domain.services;
 
-import com.example.demo.dataprovider.converters.Converter;
-import com.example.demo.dataprovider.converters.LocacaoConverter;
-import com.example.demo.dataprovider.entities.Locacao;
-import com.example.demo.dataprovider.repositories.LocacaoRepository;
 import com.example.demo.domain.dtos.LocacaoDTO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.demo.domain.gateways.LocacaoGateway;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
-public class LocacaoService extends AbstractService<Locacao, LocacaoDTO, Long> {
+@RequiredArgsConstructor
+public class LocacaoService {
 
-    @Autowired
-    private LocacaoRepository locacaoRepository;
+    private LocacaoGateway locacaoGateway;
 
-    @Autowired
-    private LocacaoConverter locacaoConverter;
-
-    @Override
-    protected JpaRepository<Locacao, Long> getRepository() {
-        return locacaoRepository;
+    public boolean isEmpty() {
+        return false;
     }
 
-    @Override
-    protected Converter<Locacao, LocacaoDTO> getConverter() {
-        return locacaoConverter;
+    public Long count() {
+        try {
+            return locacaoGateway.count();
+        } catch (Exception exception) {
+            throw new RuntimeException(exception);
+        }
     }
+
+    public LocacaoDTO findById(Long id) {
+        try {
+            return locacaoGateway.findById(id);
+        } catch (Exception exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+    public List<LocacaoDTO> findAll() {
+        try {
+            return locacaoGateway.findAll();
+        } catch (Exception exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+    public LocacaoDTO save(LocacaoDTO locacaoDTO) {
+        try {
+            return locacaoGateway.save(locacaoDTO);
+        } catch (Exception exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+    public LocacaoDTO update(Long id, LocacaoDTO locacaoDTO) {
+        try {
+            return null;
+        } catch (Exception exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+    public void delete(long id) {
+        locacaoGateway.delete(id);
+    }
+
 }

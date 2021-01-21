@@ -1,52 +1,42 @@
 package com.example.demo.controllers;
 
-
-import com.example.demo.dataprovider.entities.Locacao;
-import com.example.demo.dataprovider.repositories.LocacaoRepository;
+import com.example.demo.domain.dtos.LocacaoDTO;
+import com.example.demo.domain.services.LocacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/locacao")
 public class LocacaoController {
 
     @Autowired
-    private LocacaoRepository locacaoRepository;
+    private LocacaoService locacaoService;
 
     @GetMapping
-    public List<Locacao> listarLocacoes() {
-        List<Locacao> locacoes = locacaoRepository.findAll();
-        return locacoes;
+    public List<LocacaoDTO> listarLocacoes() {
+        return locacaoService.findAll();
     }
 
     @GetMapping("/id")
-    public Locacao buscarLocacao(@PathVariable Long idPrincipalLocacao) {
-        Optional<Locacao> locacoes = locacaoRepository.findById(idPrincipalLocacao);
-        Locacao locacaoResultado = locacoes.get();
-        return locacaoResultado;
+    public LocacaoDTO buscarLocacao(@PathVariable Long id) {
+        return locacaoService.findById(id);
     }
 
     @PostMapping
-    public Locacao inserirLocacao(@RequestBody Locacao locacao) {
-        Locacao locacaoSalva = locacaoRepository.save(locacao);
-        return locacaoSalva;
+    public LocacaoDTO inserirLocacao(@RequestBody LocacaoDTO locacaoDTO) {
+        return locacaoService.save(locacaoDTO);
     }
 
     @DeleteMapping("/{id}")
-    public Optional<Locacao> excluirLocacao(@PathVariable Long id) {
-        Optional<Locacao> locacao = locacaoRepository.findById(id);
-        locacaoRepository.delete(locacao.get());
-        return locacao;
-
+    public void excluirLocacao(@PathVariable Long id) {
+        locacaoService.delete(id);
     }
 
     @PutMapping
-    public Locacao editarLocacao(@RequestBody Locacao locacao) {
-        Locacao locacaoEditada = locacaoRepository.save(locacao);
-        return locacaoEditada;
+    public LocacaoDTO editarLocacao(@RequestBody LocacaoDTO locacaoDTO) {
+        return locacaoService.save(locacaoDTO);
     }
 
 }

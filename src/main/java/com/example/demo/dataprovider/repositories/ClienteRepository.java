@@ -6,4 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
+
+    // TODO - procurar como criar query JPA
+    // criar query para contar quantidade de filmes locados por cliente
+
 }

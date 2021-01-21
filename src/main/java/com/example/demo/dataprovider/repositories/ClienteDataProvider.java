@@ -31,4 +31,3 @@ public class ClienteDataProvider extends DataProvider<Cliente, ClienteDTO, Long>
         return null;
     }
 }
-

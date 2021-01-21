@@ -23,5 +23,4 @@ public interface ClienteGateway {
 
     Integer consultarQuantidadeFilmesLocados(Cliente cliente);
 
-
 }
