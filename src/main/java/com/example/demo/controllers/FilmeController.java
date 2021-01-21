@@ -1,52 +1,41 @@
 package com.example.demo.controllers;
 
-
-import com.example.demo.dataprovider.entities.Filme;
-import com.example.demo.dataprovider.repositories.FilmeRepository;
+import com.example.demo.domain.dtos.FilmeDTO;
+import com.example.demo.domain.services.FilmeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/filmes")
 public class FilmeController {
 
     @Autowired
-    private FilmeRepository filmeRepository;
+    private FilmeService filmeService;
 
     @GetMapping
-    public List<Filme> listarFilmes() {
-        List<Filme> filmes = filmeRepository.findAll();
-        return filmes;
+    public List<FilmeDTO> listarFilmes() {
+        return filmeService.findAll();
     }
 
     @GetMapping("/id")
-    public Filme buscarFilme(@PathVariable Long id) {
-        Optional<Filme> filme = filmeRepository.findById(id);
-        Filme filmeResultado = filme.get();
-        return filmeResultado;
+    public FilmeDTO buscarFilme(@PathVariable Long id) {
+        return filmeService.findById(id);
     }
 
     @PostMapping
-    public Filme inserirFilme(@RequestBody Filme filme) {
-        Filme filmeSalvo = filmeRepository.save(filme);
-        return filmeSalvo;
+    public FilmeDTO inserirFilme(@RequestBody FilmeDTO filmeDTO) {
+        return filmeService.save(filmeDTO);
     }
 
     @DeleteMapping("/{id}")
-    public Optional<Filme> excluirFilme(@PathVariable Long id) {
-        Optional<Filme> filme = filmeRepository.findById(id);
-        filmeRepository.delete(filme.get());
-        return filme;
+    public void excluirFilme(@PathVariable Long id) {
+        filmeService.delete(id);
     }
 
     @PutMapping
-    public Filme editarFilme(@RequestBody Filme filme) {
-        Filme filmeEditado = filmeRepository.save(filme);
-        return filmeEditado;
+    public FilmeDTO editarFilme(@RequestBody FilmeDTO filmeDTO) {
+        return filmeService.save(filmeDTO);
     }
-
-
 }

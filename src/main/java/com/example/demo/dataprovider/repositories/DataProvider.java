@@ -1,4 +1,4 @@
-package com.example.demo.domain.services;
+package com.example.demo.dataprovider.repositories;
 
 import com.example.demo.dataprovider.converters.Converter;
 import com.example.demo.dataprovider.entities.Persistable;
@@ -11,7 +11,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public abstract class AbstractService<T extends Persistable<PK>, DTO extends BaseDTO, PK extends Serializable> {
+public abstract class DataProvider<T extends Persistable<PK>, DTO extends BaseDTO, PK extends Serializable> {
+
 
     protected abstract JpaRepository<T, PK> getRepository();
 
